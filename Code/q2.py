@@ -19,7 +19,7 @@ def initialize_em(c):
 def e_step(mean,pi,image):
 	w = np.zeros((len(image),len(pi)))
 	for j in range(len(pi)):		
-		distance = np.square(image/25.5-mean[j]/25.5)
+		distance = np.square(image/25.5-mean[j]/25.5) #Map pixel values to 0-10 range
 		distance = (-0.5)*np.sum(distance, axis=1)
 		w[:,j] = pi[j]*np.exp(distance)
 	
@@ -68,6 +68,7 @@ def image_segmentation(input_name,output_name,n_clusters):
 	new_image(image,w,mean,pi,width,height,output_name)
 
 def main():
+	
 	image_segmentation('RobertMixed03.jpg','RobertMixed03_10.png',10)
 	image_segmentation('RobertMixed03.jpg','RobertMixed03_20.png',20)
 	image_segmentation('RobertMixed03.jpg','RobertMixed03_50.png',50)
@@ -77,5 +78,12 @@ def main():
 	image_segmentation('smallsunset.jpg','smallsunset_10.png',10)
 	image_segmentation('smallsunset.jpg','smallsunset_20.png',20)
 	image_segmentation('smallsunset.jpg','smallsunset_50.png',50)
+	
+	#Redo Sunset Image with 5 Different Start Points
+	#Since start points are random, image_segmentation function can
+	#simply be run 5 times
+	for i in range(5):
+		image_segmentation('smallsunset.jpg','smallsunset_20_'+str(i)+'.png',20)
+
 
 main()
